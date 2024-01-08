@@ -4488,13 +4488,16 @@ h6 {
   left: 12rem;
 }
 
-.arrowclass img{
-  height: 230px;
+#desktopalert{
+  display: none;
 }
 
 @media (max-width: 767px) {
   .arrowclass img{
     display: none;
+  }
+  #desktopalert{
+    display: block;
   }
 }
 
@@ -4506,7 +4509,6 @@ img{
     -webkit-user-select: none;
     -ms-user-select: none;
 }
-
 /* End Footer Area css
 ============================================================================================ */
 /*---------------------------------------------------- */
