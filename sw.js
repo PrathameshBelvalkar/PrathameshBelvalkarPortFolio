@@ -21,7 +21,6 @@ const urlsToCache = [
   'vendors/owl-carousel/owl.carousel.min.js',
   'js/jquery.ajaxchimp.min.js',
   'js/mail-script.js',
-  'https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js',
   'js/gmaps.min.js',
   'js/theme.min.js',
   'img/image-removebg-preview (1).png',
@@ -38,6 +37,7 @@ self.addEventListener('install', event => {
     caches.open(CACHE_NAME)
       .then(cache => {
         console.log('Cache opened');
+        console.log('urlsToCache');
         return cache.addAll(urlsToCache);
       })
   );
