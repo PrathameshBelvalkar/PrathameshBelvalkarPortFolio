@@ -1,6 +1,8 @@
 // Service worker file - sw.js
 
 const CACHE_NAME = 'prathamesh-portfolio-v1';
+const startURL = '/PrathameshBelvalkarPortFolio'; // Update this with your new start URL
+
 const urlsToCache = [
   'css/bootstrap.css',
   'vendors/linericon/style.css',
@@ -19,13 +21,11 @@ const urlsToCache = [
   'vendors/isotope/isotope-min.js',
   'vendors/owl-carousel/owl.carousel.min.js',
 ];
-
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
         console.log('Cache opened');
-        console.log(urlsToCache);
         return cache.addAll(urlsToCache);
       })
   );
@@ -33,25 +33,28 @@ self.addEventListener('install', event => {
 
 self.addEventListener('fetch', event => {
   event.respondWith(
-    fetch(event.request, {
-      referrerPolicy: 'strict-origin-when-cross-origin'
-      // Other fetch options if needed
-    })
-    .then(response => {
-      if (response) {
-        const responseToCache = response.clone();
-        caches.open(CACHE_NAME)
-          .then(cache => {
-            cache.put(event.request, responseToCache);
+    caches.match(event.request)
+      .then(response => {
+        if (response) {
+          return response;
+        }
+        const fetchRequest = event.request.clone();
+        return fetch(fetchRequest)
+          .then(response => {
+            if (!response || response.status !== 200 || response.type !== 'basic') {
+              return response;
+            }
+            const responseToCache = response.clone();
+            caches.open(CACHE_NAME)
+              .then(cache => {
+                cache.put(event.request, responseToCache);
+              });
+            return response;
+          })
+          .catch(() => {
+            return caches.match(startURL); // Return the start URL when fetch fails
           });
-      }
-      return response;
-    })
-    .catch(error => {
-      // Handle fetch errors
-      console.error('Fetch failed:', error);
-      return caches.match(event.request);
-    })
+      })
   );
 });
 
