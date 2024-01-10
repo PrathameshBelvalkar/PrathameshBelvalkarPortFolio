@@ -45,24 +45,25 @@ self.addEventListener('install', event => {
 
 self.addEventListener('fetch', event => {
   event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        if (response) {
-          return response;
-        }
-        const fetchRequest = event.request.clone();
-        return fetch(fetchRequest).then(response => {
-          if (!response || response.status !== 200 || response.type !== 'basic') {
-            return response;
-          }
-          const responseToCache = response.clone();
-          caches.open(CACHE_NAME)
-            .then(cache => {
-              cache.put(event.request, responseToCache);
-            });
-          return response;
-        });
-      })
+    fetch(event.request, {
+      referrerPolicy: 'strict-origin-when-cross-origin'
+      // Other fetch options if needed
+    })
+    .then(response => {
+      if (response) {
+        const responseToCache = response.clone();
+        caches.open(CACHE_NAME)
+          .then(cache => {
+            cache.put(event.request, responseToCache);
+          });
+      }
+      return response;
+    })
+    .catch(error => {
+      // Handle fetch errors
+      console.error('Fetch failed:', error);
+      return caches.match(event.request);
+    })
   );
 });
 
