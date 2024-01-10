@@ -2,7 +2,6 @@
 
 const CACHE_NAME = 'prathamesh-portfolio-v1';
 const urlsToCache = [
-  '/',
   'css/bootstrap.css',
   'vendors/linericon/style.css',
   'css/font-awesome.min.css',
@@ -19,17 +18,6 @@ const urlsToCache = [
   'vendors/isotope/imagesloaded.pkgd.min.js',
   'vendors/isotope/isotope-min.js',
   'vendors/owl-carousel/owl.carousel.min.js',
-  'js/jquery.ajaxchimp.min.js',
-  'js/mail-script.js',
-  'js/gmaps.min.js',
-  'js/theme.min.js',
-  'img/image-removebg-preview (1).png',
-  'img/herosectionimage.svg',
-  'img/aboutusimage.svg',
-  'img/services/s1.png',
-  'img/services/s2.png',
-  'img/services/s3.png',
-  'img/services/s4.png',
 ];
 
 self.addEventListener('install', event => {
