@@ -653,7 +653,11 @@
 	<script src="js/theme.min.js"></script>
 </body>
 <script>
+	$(document).ready(function(){
+		makeFactcall();
+	});
 	var limit = 1;
+	function makeFactcall(){
 	$.ajax({
 		method: 'GET',
 		url: 'https://api.api-ninjas.com/v1/facts?limit=' + limit,
@@ -682,7 +686,7 @@
 			console.error('Error: ', jqXHR.responseText);
 		}
 	});
-
+	}
 	var typed = new Typed('#herosectiontext', {
 		strings: ['I AM PRATHAMESH BELVALKAR '],
 		typeSpeed: 60,
