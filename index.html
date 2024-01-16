@@ -653,37 +653,41 @@
 	<script src="js/theme.min.js"></script>
 </body>
 <script>
-	$(document).ready(function () {
-		var limit = 1;
-		$.ajax({
-			method: 'GET',
-			url: 'https://api.api-ninjas.com/v1/facts?limit=' + limit,
-			headers: { 'X-Api-Key': '6EKLCRC3M+Sa04Pa6iphsw==dSiGztdqIOqVmHpC' },
-			contentType: 'application/json',
-			success: function (result) {
-				console.log(result[0].fact);
-				const Toast = Swal.mixin({
-					toast: true,
-					position: "bottom-end",
-					showConfirmButton: false,
-					timer: 7000,
-					timerProgressBar: true,
-				});
-				Toast.fire({
-					html: '<div class="d-flex justify-content-around align-items-center "><img src="img/factcap.svg"><span class="font-weight-bold">'+result[0].fact+'</span></div>',
-					// title: "Signed in successfully"
-				});
+	var limit = 1;
+	$.ajax({
+		method: 'GET',
+		url: 'https://api.api-ninjas.com/v1/facts?limit=' + limit,
+		headers: { 'X-Api-Key': '6EKLCRC3M+Sa04Pa6iphsw==dSiGztdqIOqVmHpC' },
+		contentType: 'application/json',
+		success: function (result) {
+			console.log(result[0].fact);
+			const Toast = Swal.mixin({
+				toast: true,
+				position: "bottom-end",
+				showConfirmButton: false,
+				timer: 7000,
+				timerProgressBar: true,
+				didOpen: (toast) => {
+					toast.onmouseenter = Swal.stopTimer;
+					toast.onmouseleave = Swal.resumeTimer;
+				}
+			});
+			Toast.fire({
+				html: '<div class="d-flex justify-content-around align-items-center "><img src="img/factcap.svg"><span class="font-weight-bold">' + result[0].fact + '</span></div>',
+				// title: "Signed in successfully"
+			});
 
-			},
-			error: function ajaxError(jqXHR) {
-				console.error('Error: ', jqXHR.responseText);
-			}
-		});
+		},
+		error: function ajaxError(jqXHR) {
+			console.error('Error: ', jqXHR.responseText);
+		}
 	});
+
 	var typed = new Typed('#herosectiontext', {
 		strings: ['I AM PRATHAMESH BELVALKAR '],
 		typeSpeed: 60,
 		showCursor: false
 	});
 </script>
+
 </html>
